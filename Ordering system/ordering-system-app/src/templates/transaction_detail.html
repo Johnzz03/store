@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transaction Receipt</title>
+    <style>
+        .receipt-container {
+            max-width: 400px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            padding: 32px 24px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .receipt-header {
+            text-align: center;
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 18px;
+            color: #28a745;
+        }
+        .receipt-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 18px;
+        }
+        .receipt-table th, .receipt-table td {
+            padding: 8px 4px;
+            border-bottom: 1px dashed #bbb;
+            text-align: left;
+        }
+        .receipt-table th {
+            background: #f8f8f8;
+        }
+        .receipt-total {
+            text-align: right;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+        .receipt-footer {
+            text-align: center;
+            margin-top: 24px;
+            color: #888;
+            font-size: 0.95em;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 24px;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(145deg, #35424a 0%, #22313f 100%);
+            color: #fff;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .back-btn:hover {
+            background: linear-gradient(145deg, #28a745 0%, #218838 100%);
+        }
+        @media print {
+            .back-btn {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="receipt-container">
+        <div class="receipt-header">
+            Transaction Receipt<br>
+            <span style="font-size:0.9em; color:#555;">#{{ transaction.id }}</span>
+        </div>
+        <div>
+            <strong>Date:</strong> {{ transaction.timestamp.strftime('%Y-%m-%d %H:%M:%S') if transaction.timestamp else '-' }}<br>
+            <strong>Payment Method:</strong> {{ transaction.payment_method|capitalize }}
+        </div>
+        <table class="receipt-table">
+            <tr>
+                <th>Item</th>
+                <th style="text-align:right;">Price</th>
+            </tr>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td style="text-align:right;">${{ '%.2f'|format(item.price) }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="receipt-total">
+            Total: ${{ '%.2f'|format(transaction.total_price or 0) }}
+        </div>
+        <div class="receipt-footer">
+            Thank you for your purchase!
+        </div>
+        <a href="{{ url_for('main.view_transactions') }}" class="back-btn">Back to Transactions</a>
+        <button onclick="window.print()" class="back-btn" style="margin-left:10px;">Print</button>
+    </div>
+</body>
+</html>

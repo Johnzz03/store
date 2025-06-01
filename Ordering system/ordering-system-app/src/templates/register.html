@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register - Ordering System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            background: #f3f4f6;
+        }
+        .container {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(52,66,74,0.13), 0 2px 8px rgba(52,66,74,0.08);
+            max-width: 400px;
+            margin: 48px auto 24px auto;
+            padding: 36px 32px 28px 32px;
+        }
+        h1 {
+            text-align: center;
+            color: #35424a;
+            margin-bottom: 24px;
+            text-shadow: 0 2px 8px rgba(52,66,74,0.08);
+        }
+        label {
+            font-weight: 600;
+            color: #35424a;
+        }
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px 14px;
+            margin: 8px 0 18px 0;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(52,66,74,0.06);
+            font-size: 1rem;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+        input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+            border: 1.5px solid #e8491d;
+            box-shadow: 0 4px 16px rgba(232,73,29,0.13);
+            outline: none;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            font-size: 1rem;
+            color: #fff;
+            background: linear-gradient(90deg, #35424a 70%, #e8491d 100%);
+            padding: 12px 0;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(52,66,74,0.13);
+            margin-top: 12px;
+            transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+        }
+        .btn:hover {
+            background: linear-gradient(90deg, #e8491d 70%, #35424a 100%);
+            transform: scale(1.04);
+            box-shadow: 0 6px 24px rgba(232,73,29,0.18);
+        }
+        footer {
+            background: #35424a;
+            color: #fff;
+            text-align: center;
+            padding: 16px 0;
+            border-radius: 0 0 12px 12px;
+            margin-top: 32px;
+            box-shadow: 0 -2px 8px rgba(52,66,74,0.07);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Register</h1>
+        <form action="/register" method="post">
+            <label for="username">Username</label><br>
+            <input type="text" id="username" name="username" required><br>
+            
+            <label for="email">Email</label><br>
+            <input type="email" id="email" name="email" required><br>
+            
+            <label for="password">Password</label><br>
+            <input type="password" id="password" name="password" required><br>
+            
+            <button type="submit" class="btn">Register</button>
+        </form>
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
+         <p style="text-align:center; margin-top:18px;">
+             Already have an account?
+            <a href="{{ url_for('user_main.login') }}" style="color:#e8491d; font-weight:bold;">Log in</a>
+        </p>
+    </div>
+</body>
+</html>

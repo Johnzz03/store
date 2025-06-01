@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Cart Item</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; }
+        .edit-form {
+            background: #fff;
+            max-width: 400px;
+            margin: 60px auto;
+            padding: 32px 24px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.18), 0 1.5px 4px rgba(0,0,0,0.15);
+        }
+        label { display: block; margin-top: 16px; color: #35424a; }
+        .product-image {
+            display: block;
+            margin: 0 auto 16px auto;
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px #bbb;
+        }
+        .product-choices {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .product-choice {
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding: 8px;
+            cursor: pointer;
+            text-align: center;
+            width: 90px;
+            background: #f9f9f9;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+        .product-choice.selected, .product-choice:hover {
+            border: 2px solid #35424a;
+            box-shadow: 0 2px 8px #35424a44;
+            background: #e6eaf0;
+        }
+        .product-choice img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            border-radius: 4px;
+            margin-bottom: 4px;
+        }
+        button, a {
+            margin-top: 20px;
+            padding: 10px 22px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(145deg, #35424a 0%, #22313f 100%);
+            color: #fff;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: inline-block;
+        }
+        button:hover, a:hover {
+            background: linear-gradient(145deg, #e8491d 0%, #35424a 100%);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="edit-form">
+        <h2>Edit Cart Item</h2>
+        {% if message %}
+            <div style="color: green; margin-bottom: 10px;">{{ message }}</div>
+        {% endif %}
+        <!-- Show selected product image -->
+        <img id="product-img"
+             class="product-image"
+             src="{{ url_for('static', filename=cart_item.image if cart_item.image else products[0].image) }}"
+             alt="Product Image">
+        <form method="post" id="edit-form">
+            <label>Product Name:</label>
+            <div class="product-choices" id="product-choices">
+                {% for product in products %}
+                <div class="product-choice{% if product.name == cart_item.name %} selected{% endif %}"
+                     data-name="{{ product.name }}"
+                     data-price="{{ product.price }}"
+                     data-image="{{ product.image }}">
+                    <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
+                    <div>{{ product.name }}</div>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- Hidden fields to store selected values -->
+            <input type="hidden" name="name" id="name-input" value="{{ cart_item.name }}">
+            <label>Price:</label>
+            <input type="number" name="price" id="price-input" value="{{ cart_item.price }}" step="0.01" required>
+            <button type="submit">Save</button>
+            <a href="{{ url_for('main.view_cart') }}">Cancel</a>
+        </form>
+    </div>
+    <script>
+        // Handle product choice selection
+        const choices = document.querySelectorAll('.product-choice');
+        const nameInput = document.getElementById('name-input');
+        const priceInput = document.getElementById('price-input');
+        const img = document.getElementById('product-img');
+        choices.forEach(choice => {
+            choice.addEventListener('click', function() {
+                choices.forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+                nameInput.value = this.getAttribute('data-name');
+                priceInput.value = this.getAttribute('data-price');
+                img.src = "{{ url_for('static', filename='') }}" + this.getAttribute('data-image');
+            });
+        });
+    </script>
+</body>
+</html>

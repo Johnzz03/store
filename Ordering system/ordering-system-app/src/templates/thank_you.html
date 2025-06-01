@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thank You!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+        }
+        .thank-you-container {
+            background: #fff;
+            max-width: 400px;
+            margin: 80px auto;
+            padding: 40px 24px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.18), 0 1.5px 4px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        h1 {
+            color: #28a745;
+            margin-bottom: 16px;
+        }
+        p {
+            color: #35424a;
+            font-size: 1.2em;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 24px;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(145deg, #35424a 0%, #22313f 100%);
+            color: #fff;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .back-btn:hover {
+            background: linear-gradient(145deg, #28a745 0%, #218838 100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="thank-you-container">
+        <h1>Thank You!</h1>
+        <p>Your purchase was successful.<br>
+        We appreciate your business!</p>
+        <a href="{{ url_for('main.home2') }}" class="back-btn">Back to Home</a>
+    </div>
+</body>
+</html>
