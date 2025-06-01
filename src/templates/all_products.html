@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Products</title>
+    <style>
+        body { background: #f4f4f4; font-family: Arial, sans-serif; }
+        .container { max-width: 900px; margin: 40px auto; background: #fff; padding: 32px; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.12);}
+        h2 { text-align: center; color: #28a745; }
+        table { width: 100%; border-collapse: collapse; margin-top: 24px; }
+        th, td { padding: 10px; border-bottom: 1px solid #ddd; text-align: center; }
+        th { background: #28a745; color: #fff; }
+        tr:hover { background: #f1f1f1; }
+        .product-img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: #f8f9fa;
+            box-shadow: 0 2px 8px rgba(52,66,74,0.10);
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 24px;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(145deg, #35424a 0%, #22313f 100%);
+            color: #fff;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .back-btn:hover {
+            background: linear-gradient(145deg, #28a745 0%, #218838 100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{{ url_for('main.home2') }}" class="back-btn" style="margin-bottom: 16px;">Back to Home</a>
+        <h2>All Products Listed by Customers</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price ($)</th>
+                <th>Action</th>
+            </tr>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>
+                    {% if product.image %}
+                        <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}" class="product-img">
+                    {% else %}
+                        <span style="color:#aaa;">No Image</span>
+                    {% endif %}
+                </td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.description }}</td>
+                <td>${{ product.price }}</td>
+                <td>
+                    <form action="{{ url_for('main.add_to_cart_from_all', product_id=product.id) }}" method="post" style="margin:0;">
+                        <button type="submit" class="btn">Add to Cart</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

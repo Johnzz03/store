@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Chat</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; }
+        .chat-container { max-width: 500px; margin: 40px auto; background: #fff; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); padding: 24px; }
+        .chat-messages { height: 300px; overflow-y: auto; border: 1px solid #ddd; border-radius: 8px; padding: 12px; margin-bottom: 16px; background: #fafafa; }
+        .chat-message { margin-bottom: 10px; }
+        .chat-message strong { color: #28a745; }
+        .chat-form { display: flex; gap: 8px; }
+        .chat-form input, .chat-form button { padding: 8px; border-radius: 6px; border: 1px solid #ccc; }
+        .chat-form button { background: #28a745; color: #fff; border: none; font-weight: bold; cursor: pointer; }
+        .chat-form button:hover { background: #218838; }
+        .back-btn { margin-top: 16px; display: inline-block; background: #35424a; color: #fff; padding: 8px 18px; border-radius: 8px; text-decoration: none; }
+        .back-btn:hover { background: #28a745; }
+    </style>
+    <script>
+        // Auto-refresh chat messages every 2 seconds
+        setInterval(function() {
+            fetch('/chat/messages')
+                .then(response => response.json())
+                .then(data => {
+                    let chatBox = document.getElementById('chat-messages');
+                    chatBox.innerHTML = '';
+                    data.forEach(msg => {
+                        chatBox.innerHTML += `<div class="chat-message"><strong>${msg.username}:</strong> ${msg.message}</div>`;
+                    });
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                });
+        }, 2000);
+    </script>
+</head>
+<body>
+    <div class="chat-container">
+        <h2>Customer Chat</h2>
+        <div id="chat-messages" class="chat-messages">
+            {% for msg in chat_history %}
+                <div class="chat-message"><strong>{{ msg.username }}:</strong> {{ msg.message }}</div>
+            {% endfor %}
+        </div>
+        <form class="chat-form" method="post" action="{{ url_for('chat_main.chat') }}">
+            <input type="text" name="username" placeholder="Your name" style="width: 30%;" required>
+            <input type="text" name="message" placeholder="Type your message..." style="width: 50%;" required>
+            <button type="submit">Send</button>
+        </form>
+        <a href="{{ url_for('main.home2') }}" class="back-btn">Back to Home</a>
+    </div>
+</body>
+</html>

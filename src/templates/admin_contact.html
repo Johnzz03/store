@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Contact Messages</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            background: #f3f4f6;
+        }
+        .admin-container {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(52,66,74,0.13), 0 2px 8px rgba(52,66,74,0.08);
+            max-width: 800px;
+            margin: 48px auto 24px auto;
+            padding: 36px 32px 28px 32px;
+        }
+        h1 {
+            text-align: center;
+            color: #35424a;
+            margin-bottom: 24px;
+            text-shadow: 0 2px 8px rgba(52,66,74,0.08);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 24px;
+        }
+        th, td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #e0e0e0;
+            text-align: left;
+        }
+        th {
+            background: #f3f4f6;
+            color: #35424a;
+        }
+        tr:hover {
+            background: #f9f9f9;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 24px;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(145deg, #35424a 0%, #22313f 100%);
+            color: #fff;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .back-btn:hover {
+            background: linear-gradient(145deg, #28a745 0%, #218838 100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h1>Contact Messages</h1>
+        <a href="{{ url_for('main.home2') }}" class="back-btn" style="margin-bottom: 16px;">Back to Home</a>
+        {% if contacts %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contact in contacts %}
+                <tr>
+                    <td>{{ contact.id }}</td>
+                    <td>{{ contact.name }}</td>
+                    <td>{{ contact.email }}</td>
+                    <td>{{ contact.message }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p style="text-align:center;">No contact messages found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

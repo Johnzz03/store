@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Center</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+        }
+        .pay-center-container {
+            background: #fff;
+            max-width: 400px;
+            margin: 60px auto;
+            padding: 32px 24px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.18), 0 1.5px 4px rgba(0,0,0,0.15);
+        }
+        h2 {
+            text-align: center;
+            color: #35424a;
+            margin-bottom: 24px;
+        }
+        label {
+            display: block;
+            margin-top: 16px;
+            color: #35424a;
+        }
+        .payment-options {
+            margin: 16px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        .payment-options label {
+            margin: 0 8px 0 0;
+            font-weight: bold;
+            color: #22313f;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+        button {
+            margin-top: 24px;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(145deg, #28a745 0%, #218838 100%);
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: linear-gradient(145deg, #218838 0%, #28a745 100%);
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="pay-center-container">
+        <h2>Payment Center</h2>
+        <form method="post">
+            <div class="payment-options">
+                <label>
+                    <input type="radio" name="payment_method" value="gcash" checked onchange="showFields()"> GCash
+                </label>
+                <label>
+                    <input type="radio" name="payment_method" value="maya" onchange="showFields()"> Maya
+                </label>
+                <label>
+                    <input type="radio" name="payment_method" value="creditcard" onchange="showFields()"> Credit Card
+                </label>
+            </div>
+
+            <!-- GCash/Maya fields -->
+            <div id="ewallet-fields">
+                <label for="ewallet-number">Mobile Number</label>
+                <input type="text" id="ewallet-number" name="ewallet_number" maxlength="11" placeholder="09XXXXXXXXX">
+
+                <label for="ewallet-cardname">Name</label>
+                <input type="text" id="ewallet-cardname" name="cardname" placeholder="Name">
+            </div>
+
+            <!-- Credit Card fields -->
+            <div id="creditcard-fields" class="hidden">
+                <label for="cardname">Cardholder Name</label>
+                <input type="text" id="cardname" name="cardname">
+
+                <label for="cardnumber">Card Number</label>
+                <input type="text" id="cardnumber" name="cardnumber" maxlength="19">
+
+                <label for="expdate">Expiration Date</label>
+                <input type="text" id="expdate" name="expdate" placeholder="MM/YY" maxlength="5">
+
+                <label for="cvv">CVV</label>
+                <input type="number" id="cvv" name="cvv" maxlength="4">
+            </div>
+
+            <button type="submit">Pay Now</button>
+        </form>
+    </div>
+    <script>
+        function showFields() {
+            var method = document.querySelector('input[name="payment_method"]:checked').value;
+            document.getElementById('ewallet-fields').classList.toggle('hidden', method === 'creditcard');
+            document.getElementById('creditcard-fields').classList.toggle('hidden', method !== 'creditcard');
+        }
+        // Initialize on page load
+        showFields();
+    </script>
+</body>
+</html>

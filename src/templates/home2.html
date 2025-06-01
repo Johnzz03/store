@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Johnz Store</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e63212;
+        }
+        .category {
+            margin: 20px 0;
+        }
+        ul {
+            padding: 0;
+            list-style: none;
+        }
+        .category li {
+            background: #fff;
+            margin-bottom: 24px;
+            border-radius: 16px;
+            box-shadow: 0 6px 24px rgba(52,66,74,0.13), 0 1.5px 4px rgba(52,66,74,0.08);
+            padding: 24px 12px 16px 12px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+        .category li:hover {
+            transform: translateY(-8px) scale(1.04);
+            box-shadow: 0 12px 32px rgba(52,66,74,0.18), 0 3px 8px rgba(52,66,74,0.10);
+            z-index: 2;
+        }
+        .category img {
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(52,66,74,0.10);
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            padding: 6px;
+        }
+        .btn {
+            display: inline-block;
+            font-size: 1rem;
+            color: #fff;
+            background: linear-gradient(90deg, #35424a 70%, #e8491d 100%);
+            padding: 10px 28px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(52,66,74,0.13);
+            margin-top: 12px;
+            transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+        }
+        .btn:hover {
+            background: linear-gradient(90deg, #e8491d 70%, #35424a 100%);
+            transform: scale(1.07);
+            box-shadow: 0 6px 24px rgba(232,73,29,0.18);
+        }
+        nav ul {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 30px 0 20px 0;
+            padding: 0;
+        }
+        nav ul li {
+            margin: 8px 0;
+        }
+        nav ul li a {
+            color: #35424a;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.2s;
+        }
+        nav ul li a:hover {
+            color: #e8491d;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 24px;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(145deg, #35424a 0%, #22313f 100%);
+            color: #fff;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .back-btn:hover {
+            background: linear-gradient(145deg, #28a745 0%, #218838 100%);
+        }
+    </style>
+    <nav>
+    <ul style="display: flex; flex-direction: row; justify-content: space-between; margin: 50px 30px; padding: 0;">
+       <li style="margin: 0 15px;"><a href="/home2">Home</a></li>
+       <li style="margin: 0 15px;"><a href="/all_products">Customers Sells Items</a></li>
+       <li style="margin: 0 15px;"><a href="/aboutus">About us</a></li>
+       <li style="margin: 0 15px;"><a href="/sell">Sell Product</a></li>
+       <li style="margin: 0 15px;"><a href="/contact">Contact</a></li>
+       <li style="margin: 0 15px;"><a href="/logout">Log out</a></li>
+       <li style="margin: 0 15px;"><a href="/cart">Cart</a></li>
+       <li style="margin: 0 15px;"><a href="/transactions">Transactions</a></li>
+       <li style="margin: 0 15px;"><a href="/admin/contacts">Messages</a></li>
+    </ul>
+    </nav>
+</head>
+<body>
+    <a href="{{ url_for('chat_main.chat') }}" class="back-btn" style="margin: 20px 0 20px 30px; display: inline-block;">
+        Go to Customer Chat
+    </a>
+    <div class="container">
+        <h1 class="text-center mt-5">Welcome Costumers</h1>
+        <p class="text-center">Have a Good Day </p>
+
+        <div class="row">
+            <div class="col-md-4 category">
+                <h3>Electronics</h3>
+                <ul>
+                    <li>
+                        <img src="{{ url_for('static', filename='/headset.jpg') }}" alt="Headset" style="width:80px;height:80px;"><br>
+                        Headsets
+                        <form action="{{ url_for('main.add_to_cart', product_id=1) }}" method="post">
+                            <input type="hidden" name="image" value="Headsets">
+                            <input type="hidden" name="name" value="Headsets">
+                            <input type="hidden" name="price" value="49.99">
+                            <button class="btn" type="submit">$49.99</button>
+                        </form>
+                    </li>
+                    <li>
+                        <img src="{{ url_for('static', filename='/keyboard.jpg') }}" alt="Keyboard" style="width:80px;height:80px;"><br>
+                        Keyboards
+                        <form action="{{ url_for('main.add_to_cart', product_id=2) }}" method="post">
+                            <input type="hidden" name="image" value="Keyboards">
+                            <input type="hidden" name="name" value="Keyboards">
+                            <input type="hidden" name="price" value="39.99">
+                            <button class="btn" type="submit">$39.99</button>
+                        </form>
+                    </li>
+                    <li>
+                        <img src="{{ url_for('static', filename='/mouse.jpg') }}" alt="Computer Mouse" style="width:80px;height:80px;"><br>
+                        Computer Mouse
+                        <form action="{{ url_for('main.add_to_cart', product_id=3) }}" method="post">
+                            <input type="hidden" name="image" value="Computer Mouse">
+                            <input type="hidden" name="name" value="Computer Mouse">
+                            <input type="hidden" name="price" value="29.99">
+                            <button class="btn" type="submit">$19.99</button>
+                        </form>
+                    </li>
+                    <li>
+                        <img src="{{ url_for('static', filename='/chair.jpg') }}" alt="Chair" style="width:80px;height:80px;"><br>
+                        Chairs
+                        <form action="{{ url_for('main.add_to_cart', product_id=4) }}" method="post">
+                            <input type="hidden" name="image" value="Chairs">
+                            <input type="hidden" name="name" value="chair">
+                            <input type="hidden" name="price" value="89.99">
+                            <button class="btn" type="submit">$89.99</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4 category">
+                <h3>Home Essentials</h3>
+                <ul>
+                    <li>
+                        <img src="{{ url_for('static', filename='/cleaning.jpg') }}" alt="Cleaning" style="width:80px;height:80px;"><br>
+                        Cleaning Tools
+                        <form action="{{ url_for('main.add_to_cart', product_id=5) }}" method="post">
+                            <input type="hidden" name="image" value="Cleaning Tools">
+                            <input type="hidden" name="name" value="Cleaning Tools">
+                            <input type="hidden" name="price" value="19.99">
+                            <button class="btn" type="submit">$29.99</button>
+                        </form>
+                    </li>
+                    <li>
+                        <img src="{{ url_for('static', filename='/storage.jpg') }}" alt="Storage" style="width:80px;height:80px;"><br>
+                        Home Storage
+                        <form action="{{ url_for('main.add_to_cart', product_id=6) }}" method="post">
+                            <input type="hidden" name="image" value="Home Storage">
+                            <input type="hidden" name="name" value="Home Storage">
+                            <input type="hidden" name="price" value="39.99">
+                            <button class="btn" type="submit">$39.99</button>
+                        </form>
+                    </li>
+                    <li>
+                        <img src="{{ url_for('static', filename='/decor.jpg') }}" alt="Decor" style="width:80px;height:80px;"><br>
+                        Home Decor
+                        <form action="{{ url_for('main.add_to_cart', product_id=7) }}" method="post">
+                            <input type="hidden" name="image" value="Home Decor">
+                            <input type="hidden" name="name" value="Home Decor">
+                            <input type="hidden" name="price" value="59.99">
+                            <button class="btn" type="submit">$59.99</button>
+                        </form>
+                    </li>
+                    <li>
+                        <img src="{{ url_for('static', filename='/bedding.jpg') }}" alt="Bedding" style="width:80px;height:80px;"><br>
+                        Bedding
+                        <form action="{{ url_for('main.add_to_cart', product_id=8) }}" method="post">
+                            <input type="hidden" name="image" value="Bedding">
+                            <input type="hidden" name="name" value="Bedding">
+                            <input type="hidden" name="price" value="79.99">
+                            <button class="btn" type="submit">$79.99</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4 category">
+                <h3>Fashion Deals</h3>
+                <ul>
+                    <li>
+                        <img src="{{ url_for('static', filename='/jeans.jpg') }}" alt="Jeans" style="width:80px;height:80px;"><br>
+                        Jeans under $50
+                        <form action="{{ url_for('main.add_to_cart', product_id=9) }}" method="post">
+                            <input type="hidden" name="image" value="Jeans">
+                            <input type="hidden" name="name" value="Jeans">
+                            <input type="hidden" name="price" value="49.99">
+                            <button class="btn" type="submit">$49.99</button>
+                        </form>
+                    </li>
+                    <li>
+                        <img src="{{ url_for('static', filename='/tops.jpg') }}" alt="Tops" style="width:80px;height:80px;"><br>
+                        Tops under $25
+                        <form action="{{ url_for('main.add_to_cart', product_id=10) }}" method="post">
+                            <input type="hidden" name="image" value="Tops">
+                            <input type="hidden" name="name" value="Tops">
+                            <input type="hidden" name="price" value="24.99">
+                            <button class="btn" type="submit">$24.99</button>
+                        </form>
+                    </li>
+                    <li>
+                        <img src="{{ url_for('static', filename='/dress.jpg') }}" alt="Dress" style="width:80px;height:80px;"><br>
+                        Dress under $30
+                        <form action="{{ url_for('main.add_to_cart', product_id=11) }}" method="post">
+                            <input type="hidden" name="image" value="Dress">
+                            <input type="hidden" name="name" value="Dress">
+                            <input type="hidden" name="price" value="29.99">
+                            <button class="btn" type="submit">$29.99</button>
+                        </form>
+                    </li>
+                    <li>
+                        <img src="{{ url_for('static', filename='/shoes.jpg') }}" alt="Shoes" style="width:80px;height:80px;"><br>
+                        Shoes under $50
+                        <form action="{{ url_for('main.add_to_cart', product_id=12) }}" method="post">
+                            <input type="hidden" name="image" value="Shoes">
+                            <input type="hidden" name="name" value="Shoes">
+                            <input type="hidden" name="price" value="49.99">
+                            <button class="btn" type="submit">$49.99</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
